@@ -1,0 +1,27 @@
+/*Once we know the PID it is easy to know what to do next*/
+/*You have to cd /tmp and vim break.c */
+/*Paste the code below into it */
+/* cryptanalyse-ch21@challenge01:~$ pwd
+	/challenge/cryptanalyse/ch21 */
+
+#include <crypt.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+int main()
+{
+	char pid[16];
+	snprintf(pid, sizeof(pid), "%i", getpid());
+	char *arg = crypt(pid, "$1$awesome");
+	execl("/challenge/cryptanalyse/ch21/ch21", "ch21", arg, NULL);
+	return 0;
+}
+
+/*
+** gcc break.c -o solution -lcrypt
+** We know that pid is ch21.c
+** run ./solution
+** -/q2/a9d6e31D
+*/

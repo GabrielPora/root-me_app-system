@@ -14,8 +14,9 @@ void	foo(void)
 int	main(int __attribute__((unused))ac, const char **av)
 {
 	int		value;
-	char	buff[16] = {0};	
-	
+	char	buff[16] = {0};
+
+	printf("av: %s", av[1]);
 	value = 0;
 	strcpy(buff, av[1]);
 	if (value != 0)

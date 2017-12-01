@@ -14,9 +14,7 @@ int main()
 {
 	char pid[16];
 	snprintf(pid, sizeof(pid), "%i", getpid());
-	char *arg = crypt(pid, "$1$awesome");
-	execl("/challenge/cryptanalyse/ch21/ch21", "ch21", arg, NULL);
-	return 0;
+	execl("/challenge/cryptanalyse/ch21/ch21", "ch21", crypt(pid, "$1$awesome"), NULL);
 }
 
 /*
